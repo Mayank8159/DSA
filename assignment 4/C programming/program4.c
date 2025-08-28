@@ -1,4 +1,3 @@
-// Write a program to perform insertion and deletion of element in a given list
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -21,25 +20,21 @@ void deleteNode(struct Node** head, int key) {
     struct Node* temp = *head;
     struct Node* prev = NULL;
 
-    // If the head node itself holds the key
     if (temp != NULL && temp->data == key) {
-        *head = temp->next;  // Change head
-        free(temp);          // Free old head
+        *head = temp->next;
+        free(temp);
         return;
     }
 
-    // Search for the key to be deleted
     while (temp != NULL && temp->data != key) {
         prev = temp;
         temp = temp->next;
     }
 
-    // If key was not present in linked list
     if (temp == NULL) return;
 
-    // Unlink the node from linked list
     prev->next = temp->next;
-    free(temp);  // Free memory
+    free(temp);
 }
 
 // Function to print the linked list
@@ -51,23 +46,42 @@ void printList(struct Node* node) {
     printf("NULL\n");
 }
 
-// Main function
+// Main function with user input
 int main() {
     struct Node* head = NULL;
+    int choice, value;
 
-    // Insert some values
-    insertAtBeginning(&head, 10);
-    insertAtBeginning(&head, 20);
-    insertAtBeginning(&head, 30);
+    while (1) {
+        printf("\n--- Menu ---\n");
+        printf("1. Insert at beginning\n");
+        printf("2. Delete a value\n");
+        printf("3. Print list\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    // Print the linked list
-    printf("Linked List: ");
-    printList(head);
-
-    // Delete a node
-    deleteNode(&head, 20);
-    printf("After deletion: ");
-    printList(head);
+        switch (choice) {
+            case 1:
+                printf("Enter value to insert: ");
+                scanf("%d", &value);
+                insertAtBeginning(&head, value);
+                break;
+            case 2:
+                printf("Enter value to delete: ");
+                scanf("%d", &value);
+                deleteNode(&head, value);
+                break;
+            case 3:
+                printf("Current Linked List: ");
+                printList(head);
+                break;
+            case 4:
+                printf("Exiting...\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    }
 
     return 0;
 }
